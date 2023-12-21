@@ -9,26 +9,43 @@ const App = () => {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [filteredData, setFilteredData] = useState(null) 
 
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchingData = async () => {
       setLoading(true)
-    try {
+      try {
         const response = await fetch(CARD_URL);
         const json = await response.json()
-    
+
         setData(json)
+        setFilteredData(json)
         setLoading(false)
         // console.log(json) 
-    } catch (error) {
-      setError("Unable to fetch data")
-    }
+      } catch (error) {
+        setError("Unable to fetch data")
+      }
     }
     fetchingData();
   }, [])
 
+  const searchFood = (e) => {
+    const foodValue = e.target.value;
+    // console.log(foodValue)
+    
+    if(foodValue === ""){
+      setFilteredData(null)
+    }
+
+    const filtered = data?.filter( (food) => 
+    food.name.toLowerCase().includes(foodValue.toLowerCase()))
+
+    setFilteredData(filtered)
+  }
+
   // const temp = [
+
   //   {
   //     "name": "Boilded Egg",
   //     "price": 10,
@@ -40,32 +57,34 @@ const App = () => {
 
   console.log(data)
 
-  if(error) return <div>{error}</div>
-  if(loading) return <div>Loading....</div>
+  if (error) return <div>{error}</div>
+  if (loading) return <div>Loading....</div>
   // fetchingData();
 
 
-  return <MainContainer>
-    <TopContainer>
-      <div className="logo">
-        <img src="/Foody.png" alt="Logo" />
-      </div>
+  return <>
+    <MainContainer>
 
-      <div className="search">
-        <input type="search" placeholder="Search Food" />
-      </div>
-    </TopContainer>
+      <TopContainer>
+        <div className="logo">
+          <img src="/Foody.png" alt="Logo" />
+        </div>
 
-    <FilterContainer>
-      <Button>All</Button>
-      <Button>Breakfast</Button>
-      <Button>Lunch</Button>
-      <Button>Dinner</Button>
-    </FilterContainer>
+        <div className="search">
+          <input onChange={searchFood} type="search" placeholder="Search Food" />
+        </div>
+      </TopContainer>
 
-    <SearchResult data={data}/>
-   
-  </MainContainer>;
+      <FilterContainer>
+        <Button>All</Button>
+        <Button>Breakfast</Button>
+        <Button>Lunch</Button>
+        <Button>Dinner</Button>
+      </FilterContainer>
+
+    </MainContainer>
+    <SearchResult data={filteredData} />
+  </>;
 };
 
 export default App;
@@ -75,6 +94,8 @@ background-color: #161A30 ;
 max-width: 100%;
 margin: 0 auto;
 `;
+
+
 const TopContainer = styled.section`
 min-height: 140px;
 display: flex;

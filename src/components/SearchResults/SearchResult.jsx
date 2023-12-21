@@ -36,41 +36,46 @@ background-size: cover;
 
 const FoodCards = styled.div`
 display: flex;
-flex-direction: row;
-gap: 16px;
+column-gap: 20px;
+row-gap: 35px;
 flex-wrap: wrap;
 justify-content: center;
+padding-top: 50px;
 `;
 
 const FoodCard = styled.div`
 margin-top: 18px;
 border: 1px solid white;
-width: 300px;
-height: 150px;
+width: 340px;
+height: 160px;
 display: flex;
-flex-direction: row;
-justify-content: center;
+justify-content: space-between;
 padding: 6px;
 border-radius: 18px;
-gap: 12px;
+gap: 10px;
+align-items: top;
 
 
       background: rgba(255, 255, 255, 0.1); 
       backdrop-filter: blur(2px);     
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 
 h1{
     font-size: 20px;
+    font-weight: 600;
     margin-top: 6px;
 }
 
 p{
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 6px;
 }
 
 Button{
-    margin-top: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    margin-top: 6px;
     font-size: 10px;
 }
 
