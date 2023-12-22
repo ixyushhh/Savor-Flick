@@ -112,7 +112,8 @@ const App = () => {
 
       <FilterContainer>
         {filteredBtn.map((value) => (
-          <Button key={value.name} onClick={() => btnFilter(value.type)}>
+          <Button  isSelected = {btn === value.type}
+          key={value.name} onClick={() => btnFilter(value.type)}>
             {value.name}
             </Button>
         ))}
@@ -148,11 +149,14 @@ padding: 20px;
   input{
     background-color: transparent;
     border: 1px solid red;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
     padding: 4px 8px;
     color: white;
     height: 40px;
+    &::placeholder{
+      color : white;
+    }
   }
 }
 
@@ -171,7 +175,7 @@ padding-bottom: 12px;
 `;
 
 export const Button = styled.button`
- background-color: red;
+ background-color: ${ ({isSelected}) => (isSelected ? "#660708" : "#ff002b")};
  color: white;
  border: none;
  border-radius: 4px;
