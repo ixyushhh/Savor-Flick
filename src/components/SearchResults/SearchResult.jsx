@@ -29,7 +29,7 @@ export default SearchResult
 
 const FoodContainer = styled.section`
 // height: calc(100vh - 222px);
-height: 100vh;
+min-height: 100vh;
 background-image: url("/bg.png");
 background-size: cover;
 `;

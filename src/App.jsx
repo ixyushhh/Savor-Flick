@@ -10,6 +10,7 @@ const App = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [filteredData, setFilteredData] = useState(null) 
+  const [btn, setBtn] = useState("all")
 
 
   useEffect(() => {
@@ -44,6 +45,40 @@ const App = () => {
     setFilteredData(filtered)
   }
 
+  const btnFilter = (type) => {
+    
+    if(type === "all"){
+      setFilteredData(data)
+      setBtn("all")
+      return;
+    }
+
+    const filtered = data?.filter( (food) => food.type.toLowerCase().includes(type.toLowerCase()))
+    
+    setFilteredData(filtered)
+    setBtn(type)
+  }
+
+  const filteredBtn = [
+
+    {
+      name : "All",
+      type : "all",
+    },
+    {
+      name : "Breakfast",
+      type : "breakfast",
+    },
+    {
+      name : "Lunch",
+      type : "lunch",
+    },
+    {
+      name : "Dinner",
+      type : "dinner",
+    },
+  ]
+
   // const temp = [
 
   //   {
@@ -76,10 +111,15 @@ const App = () => {
       </TopContainer>
 
       <FilterContainer>
-        <Button>All</Button>
-        <Button>Breakfast</Button>
-        <Button>Lunch</Button>
-        <Button>Dinner</Button>
+        {filteredBtn.map((value) => (
+          <Button key={value.name} onClick={() => btnFilter(value.type)}>
+            {value.name}
+            </Button>
+        ))}
+
+        {/* <Button onClick={() => btnFilter("Breakfast")}>Breakfast</Button>   // Using map instead of making them individually.
+        <Button onClick={() => btnFilter("Lunch")}>Lunch</Button>
+        <Button onClick={() => btnFilter("Dinner")}>Dinner</Button> */}
       </FilterContainer>
 
     </MainContainer>
@@ -97,7 +137,7 @@ margin: 0 auto;
 
 
 const TopContainer = styled.section`
-min-height: 140px;
+height: 140px;
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -114,7 +154,14 @@ padding: 20px;
     color: white;
     height: 40px;
   }
-}`;
+}
+
+@media (0 < width < 600px){
+  flex-direction: column;
+  height: 90px;
+}
+
+`;
 
 const FilterContainer = styled.section`
 display: flex;
@@ -129,4 +176,8 @@ export const Button = styled.button`
  border: none;
  border-radius: 4px;
  padding: 5px 10px;
+
+ &:hover{
+  background-color: #F15A59;
+ }
 `;
